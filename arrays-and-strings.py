@@ -1,4 +1,5 @@
 import unittest
+import re
 
 def isUnique (str_to_analyze):
     characterSet = set(str_to_analyze)
@@ -16,6 +17,9 @@ def isPermutation (string1, string2):
     for letter in string2:
         chars_in_2[letter] = chars_in_2.get(letter, 0) + 1
     return chars_in_1 == chars_in_2
+
+def urliFy (data_string):
+    return re.sub(r"[ ]+", "%20", data_string)
 
 
 class TestsForChapter(unittest.TestCase):
@@ -36,6 +40,13 @@ class TestsForChapter(unittest.TestCase):
         self.assertFalse(isPermutation("abcdefrghijklmnopqrst123", "abcdefrghijklmgnopqrst123"))
         self.assertFalse(isPermutation("notebook", "desktop"))
         self.assertFalse(isPermutation("notebook", "booknoti"))
+
+    def test_urliFy(self):
+        self.assertEqual(urliFy("nospaces"), "nospaces")
+        self.assertEqual(urliFy("one space between"), "one%20space%20between")
+        self.assertEqual(urliFy("more    spaces    between"), "more%20spaces%20between")
+        self.assertEqual(urliFy("mix  of   spaces and  space at  end  "), "mix%20of%20spaces%20and%20space%20at%20end%20")
+
 
 
 if __name__ == '__main__':
