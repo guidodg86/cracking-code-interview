@@ -42,6 +42,26 @@ def searchPalindrome (data_string):
                 odd_flag = True
     return True
 
+def oneWay (data_string1, data_string2):
+    chars_in_1 = {}
+    chars_in_2 = {}
+    delta_letter=0
+
+    for letter in data_string1.lower():
+        chars_in_1[letter] = chars_in_1.get(letter, 0) + 1        
+    for letter in data_string2.lower():
+        chars_in_2[letter] = chars_in_2.get(letter, 0) + 1 
+
+    letters_set = set(data_string1 + data_string2)
+    for letter in letters_set:
+        delta_letter += abs(chars_in_1.get(letter, 0) - chars_in_2.get(letter, 0))
+
+    if delta_letter == 2 and len(data_string1) == len(data_string2):
+        return True
+    if delta_letter > 1:
+        return False
+    else:
+        return True
 
 
 class TestsForChapter(unittest.TestCase):
@@ -106,6 +126,23 @@ class TestsForChapter(unittest.TestCase):
         self.assertFalse(searchPalindrome("cviqwci"))
         self.assertFalse(searchPalindrome("arraqwd"))
         self.assertFalse(searchPalindrome("vellqwe"))
+
+
+    def test_oneWay(self):
+        self.assertTrue(oneWay("pale", "ple"))
+        self.assertTrue(oneWay("pales", "pale"))
+        self.assertTrue(oneWay("pale", "bale"))
+        self.assertFalse(oneWay("pale", "bake"))
+        self.assertTrue(oneWay("woman", "poman"))
+        self.assertTrue(oneWay("woman", "oman"))
+        self.assertTrue(oneWay("woman", "woman1"))
+        self.assertFalse(oneWay("woman", "man"))
+        self.assertTrue(oneWay("Supercalifragilisticexpialidocious", "Supercalifrarilisticexpialidocious"))
+        self.assertFalse(oneWay("Supercalifragilisticexpialidocious", "Supercalifragilisticexpialidocio"))
+        self.assertTrue(oneWay("Supercalifragilisticexpialidocious", "Supercalifragilisticexpialidocioup"))
+        self.assertFalse(oneWay("Supercalifragilisticexpialidocious", "Supercaadasxlifragilisticexpialidocio"))
+        self.assertTrue(oneWay("Supercalifragilisticexpialidocious", "Supercalifragilisticexpialidocious1"))
+        self.assertFalse(oneWay("Supercalifragilisticexpialidocious", "Supercalifaaaaaaragilisticexpialidocio"))
 
 
 if __name__ == '__main__':
