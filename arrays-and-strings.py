@@ -95,6 +95,27 @@ def zeroMatrix(input_matrix):
     
     return new_matrix
 
+
+
+def Compression(input_string):
+    letter_summary = {}
+    for character in input_string:
+        letter_summary[character] =  letter_summary.get(character, 0) + 1
+    compressed_string=""
+    for letter in letter_summary:
+        compressed_string = compressed_string + str(letter) + str(letter_summary[letter])
+    
+    if len(compressed_string) < len(input_string):
+        return compressed_string
+    else:
+        return input_string
+
+
+
+
+
+
+
 class TestsForChapter(unittest.TestCase):
 
     def test_isUnique(self):
@@ -251,7 +272,11 @@ class TestsForChapter(unittest.TestCase):
         self.assertEqual(zeroMatrix(m1), m2)
 
 
-
+    def test_Compression(self):
+        self.assertEqual(Compression("aaabbbcccdddddkkkkkkkk"), "a3b3c3d5k8")
+        self.assertEqual(Compression("aaaaaaaaaazzzzzzzzzztttttttttt"), "a10z10t10")
+        self.assertEqual(Compression("test"), "test")
+        self.assertEqual(Compression("rrrrrrrrrrrryyhhh"), "r12y2h3")
 
 
 if __name__ == '__main__':
