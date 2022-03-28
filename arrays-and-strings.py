@@ -63,6 +63,14 @@ def oneWay (data_string1, data_string2):
     else:
         return True
 
+def rotateMatrix(input_matrix):
+    reversed_matrix = reversed(input_matrix)
+    new_list = list(zip(*reversed_matrix))
+    final_matrix = [list(item) for item in new_list]
+    return final_matrix
+
+     
+
 
 class TestsForChapter(unittest.TestCase):
 
@@ -143,6 +151,24 @@ class TestsForChapter(unittest.TestCase):
         self.assertFalse(oneWay("Supercalifragilisticexpialidocious", "Supercaadasxlifragilisticexpialidocio"))
         self.assertTrue(oneWay("Supercalifragilisticexpialidocious", "Supercalifragilisticexpialidocious1"))
         self.assertFalse(oneWay("Supercalifragilisticexpialidocious", "Supercalifaaaaaaragilisticexpialidocio"))
+
+    def test_rotateMatrix(self):
+        m1 = [[1, 2, 3],
+              [4, 5, 6],
+              [7, 8, 9],]
+        m2 = [[7, 4, 1],
+              [8, 5, 2],
+              [9, 6, 3],]
+        self.assertEqual(rotateMatrix(m1), m2)
+        m3 = [[1, 2, 3, 4],
+              [5, 6, 7, 8],
+              [9, 10, 11, 12],
+              [13, 14, 15, 16]]
+        m4 = [[13, 9, 5, 1],
+              [14, 10, 6, 2],
+              [15, 11, 7, 3],
+              [16, 12, 8, 4]]
+        self.assertEqual(rotateMatrix(m3), m4)
 
 
 if __name__ == '__main__':
