@@ -1,6 +1,6 @@
 import unittest
 import re
-from xxlimited import new
+
 
 def isUnique (str_to_analyze):
     characterSet = set(str_to_analyze)
@@ -112,8 +112,16 @@ def Compression(input_string):
 
 
 
+def Rotation (input_string, rotated_string):
+    reversed_leters = (list(reversed(input_string)))
+    reversed_string =""
+    for letter in reversed_leters:
+        reversed_string = reversed_string + letter
 
-
+    if reversed_string == rotated_string:
+        return True
+    else:
+        return False
 
 
 class TestsForChapter(unittest.TestCase):
@@ -278,6 +286,13 @@ class TestsForChapter(unittest.TestCase):
         self.assertEqual(Compression("test"), "test")
         self.assertEqual(Compression("rrrrrrrrrrrryyhhh"), "r12y2h3")
 
+
+    def test_Rotation(self):
+        self.assertTrue(Rotation("water", "retaw"))
+        self.assertTrue(Rotation("excited", "deticxe"))
+        self.assertFalse(Rotation("velez", "velez"))
+        self.assertTrue(Rotation("insinuation", "noitaunisni"))
+        self.assertFalse(Rotation("yesi", "camilo"))
 
 if __name__ == '__main__':
     unittest.main()
