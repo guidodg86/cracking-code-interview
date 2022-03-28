@@ -1,5 +1,6 @@
 import unittest
 import re
+from xxlimited import new
 
 def isUnique (str_to_analyze):
     characterSet = set(str_to_analyze)
@@ -69,8 +70,30 @@ def rotateMatrix(input_matrix):
     final_matrix = [list(item) for item in new_list]
     return final_matrix
 
-     
 
+def zeroMatrix(input_matrix):
+    zero_founded = False
+    for row,line in enumerate(input_matrix):
+        for column,element in enumerate(line):
+            if element == 0:
+                zero_founded = True
+                zero_column  = column
+                zero_row = row
+
+    if not zero_founded:
+        return input_matrix
+
+    new_matrix=[]
+    for row,line in enumerate(input_matrix):
+        draft = []
+        for column,element in enumerate(line):
+            if column == zero_column or row == zero_row:
+                draft.append(0)
+            else:
+                draft.append(element)
+        new_matrix.append(draft)
+    
+    return new_matrix
 
 class TestsForChapter(unittest.TestCase):
 
@@ -169,6 +192,66 @@ class TestsForChapter(unittest.TestCase):
               [15, 11, 7, 3],
               [16, 12, 8, 4]]
         self.assertEqual(rotateMatrix(m3), m4)
+
+
+    def test_zeroMatrix(self):
+        m1 = [[1, 2, 3, 4],
+              [5, 6, 7, 8],
+              [9, 10, 11, 12],
+              [13, 14, 15, 16]]
+        m2 = [[1, 2, 3, 4],
+              [5, 6, 7, 8],
+              [9, 10, 11, 12],
+              [13, 14, 15, 16]]
+        self.assertEqual(zeroMatrix(m1), m2)
+        m1 = [[1, 2, 3, 4],
+              [5, 6, 7, 8],
+              [9, 10, 0, 12],
+              [13, 14, 15, 16]]
+        m2 = [[1, 2, 0, 4],
+              [5, 6, 0, 8],
+              [0, 0, 0, 0],
+              [13, 14, 0, 16]]
+        self.assertEqual(zeroMatrix(m1), m2)
+        m1 = [[0, 2, 3, 4],
+              [5, 6, 7, 8],
+              [9, 10, 11, 12],
+              [13, 14, 15, 16]]
+        m2 = [[0, 0, 0, 0],
+              [0, 6, 7, 8],
+              [0, 10, 11, 12],
+              [0, 14, 15, 16]]
+        self.assertEqual(zeroMatrix(m1), m2)
+        m1 = [[1, 2, 3, 4],
+              [5, 0, 7, 8],
+              [9, 10, 11, 12],
+              [13, 14, 15, 16]]
+        m2 = [[1, 0, 3, 4],
+              [0, 0, 0, 0],
+              [9, 0, 11, 12],
+              [13, 0, 15, 16]]
+        self.assertEqual(zeroMatrix(m1), m2)
+        m1 = [[1, 2, 3, 4],
+              [5, 6, 7, 8],
+              [9, 10, 11, 12],
+              [13, 14, 0, 16]]
+        m2 = [[1, 2, 0, 4],
+              [5, 6, 0, 8],
+              [9, 10, 0, 12],
+              [0, 0, 0, 0]]
+        self.assertEqual(zeroMatrix(m1), m2)
+        m1 = [[1, 2, 3, 0],
+              [5, 6, 7, 8],
+              [9, 10, 11, 12],
+              [13, 14, 15, 16]]
+        m2 = [[0, 0, 0, 0],
+              [5, 6, 7, 0],
+              [9, 10, 11, 0],
+              [13, 14, 15, 0]]
+        self.assertEqual(zeroMatrix(m1), m2)
+
+
+
 
 
 if __name__ == '__main__':
